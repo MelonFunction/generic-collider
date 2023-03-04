@@ -3,12 +3,8 @@ package collider
 
 import (
 	"errors"
-	"fmt"
-	"image/color"
 	"math"
 
-	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	vector "github.com/melonfunction/ebiten-vector"
 )
 
@@ -286,20 +282,6 @@ func (s *SpatialHash) CheckCollisions(shape Shape) []CollisionData {
 	}
 
 	return collisions
-}
-
-// Draw is a debug function. It draws a rectangle for every cell which has had a shape in it at some point.
-func (s *SpatialHash) Draw(surface *ebiten.Image) {
-	for pos, cell := range s.Hash {
-		x, y, w := float64(pos.X*s.CellSize), float64(pos.Y*s.CellSize), float64(s.CellSize)
-		color := color.RGBA{255, 255, 255, 255}
-		ebitenutil.DrawLine(surface, x, y, x+w, y, color)
-		ebitenutil.DrawLine(surface, x, y, x, y+w, color)
-		ebitenutil.DrawLine(surface, x, y+w, x+w, y+w, color)
-		ebitenutil.DrawLine(surface, x+w, y, x+w, y+w, color)
-
-		ebitenutil.DebugPrintAt(surface, fmt.Sprintf("%d", len(cell.Shapes)), pos.X*s.CellSize, pos.Y*s.CellSize)
-	}
 }
 
 // NewCircleShape creates, then adds a new CircleShape to the hash before returning it
